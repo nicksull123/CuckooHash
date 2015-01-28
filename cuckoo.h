@@ -1,7 +1,5 @@
-// Cuckoo Hashmap
-// Worst case look-up: O(1)
-// Average case insert: O(1)
-// (c) Nicholas Sullivan 2015
+// Cuckoo Hash
+// Author: Nicholas Sullivan
 
 #include <stdlib.h>
 #include <stdint.h>

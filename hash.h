@@ -1,3 +1,5 @@
+// xxHash Implementation
+
 #include <stdint.h>
 
 #ifndef HASH_H

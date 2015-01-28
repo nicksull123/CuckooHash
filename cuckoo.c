@@ -1,3 +1,6 @@
+// Cuckoo Hash
+// Author: Nicholas Sullivan
+
 #include "cuckoo.h"
 
 #define ACT_GET 0

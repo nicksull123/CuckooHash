@@ -1,4 +1,4 @@
-// Implementation of xxHash by Nick Sullivan
+// Implementation of xxHash by Nicholas Sullivan
 //
 // xxHash - Fast Hash algorithm
 // Copyright (C) 2012-2014, Yann Collet.
