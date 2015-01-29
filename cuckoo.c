@@ -223,6 +223,19 @@ cuckoo_remove(cuckoo *cuck, char *key)
 void
 cuckoo_destroy(cuckoo *cuck, uint8_t deep)
 {
+    for (int i = 0; i < cuck->cap; i++)
+    {
+        if (cuck->nodes[i].taken)
+        {
+            free(cuck->nodes[i].key);
+            if (deep)
+            {
+                free(cuck->nodes[i].val);
+            }
+        }
+    }
+    free(cuck->nodes);
+    free(cuck);
 }
 
 int
@@ -230,7 +243,7 @@ main()
 {
     cuckoo *c = cuckoo_init(100);
     cuckoo_insert(c, "123", (void *)123);
-    uint64_t *vals = malloc(sizeof(uint64_t) * 1000000);
+    char **vals = malloc(sizeof(char *) * 1000000);
     uint64_t *ins = malloc(sizeof(uint64_t) * 1000000);
     char *keys = malloc(10 * 1000000);
     uint32_t inserted = 0;
@@ -244,8 +257,8 @@ main()
             key[i] = k;
         }
         key[9] = '\0';
-        vals[i] = i;
-        if (!cuckoo_insert(c, key, (void *)(vals[i])))
+        vals[i] = malloc(10);
+        if (!cuckoo_insert(c, key, (vals[i])))
         {
             inserted++;
             ins[i] = 1;
@@ -260,7 +273,7 @@ main()
     {
         char *key = keys + (10 * i);
         void *val = cuckoo_get(c, key);
-        if ((uint64_t)val != vals[i] && ins[i])
+        if (val != vals[i] && ins[i])
         {
             printf("%d :", i);
             puts("VALS DO NOT MATCH");
@@ -298,7 +311,6 @@ main()
     free(keys);
     free(ins);
     free(vals);
-    int test;
-    scanf("%d", &test);
+    cuckoo_destroy(c, 1);
     return 0;
 }
